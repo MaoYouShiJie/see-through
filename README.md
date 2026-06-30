@@ -53,9 +53,9 @@ pip install torch==2.8.0+cu128 torchvision==0.23.0+cu128 torchaudio==2.8.0+cu128
   --index-url https://download.pytorch.org/whl/cu128
 
 # AMD ROCm users: install the ROCm wheel set that matches your local ROCm runtime instead.
-# For example, on ROCm 7.2:
+# For example, on ROCm 7.2.1:
 # pip install torch torchvision torchaudio \
-#   --index-url https://download.pytorch.org/whl/rocm7.2
+#   --index-url https://repo.radeon.com/rocm/manylinux/rocm-rel-7.2.1
 
 # 3. Install dependencies (includes common utilities and annotators)
 pip install -r requirements.txt
@@ -63,11 +63,6 @@ pip install -r requirements.txt
 # 4. Create assets symlink (you can also copy assets to the root if you prefer)
 ln -sf common/assets assets
 ```
-
-For ROCm multi-GPU systems, select one GPU with `HIP_VISIBLE_DEVICES`; after
-masking, keep `CUDA_VISIBLE_DEVICES=0` so PyTorch sees the selected device as
-device 0. `HSA_ENABLE_SDMA=0` can help avoid initialization or small-kernel hangs
-on some newer Radeon systems.
 
 **Optional annotator tiers** (install as needed):
 
