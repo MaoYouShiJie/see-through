@@ -52,6 +52,11 @@ conda activate see_through
 pip install torch==2.8.0+cu128 torchvision==0.23.0+cu128 torchaudio==2.8.0+cu128 \
   --index-url https://download.pytorch.org/whl/cu128
 
+# AMD ROCm users: install the ROCm wheel set that matches your local ROCm runtime instead.
+# For example, on ROCm 7.2:
+# pip install torch torchvision torchaudio \
+#   --index-url https://download.pytorch.org/whl/rocm7.2
+
 # 3. Install dependencies (includes common utilities and annotators)
 pip install -r requirements.txt
 
