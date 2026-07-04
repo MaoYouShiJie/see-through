@@ -15,10 +15,17 @@ def _install_missing_deps():
             missing.append(mod)
     if not missing:
         return
-    print(f"Installing missing deps: {', '.join(missing)}...")
+    pkgs = [
+        "diffusers", "transformers", "psd_tools", "accelerate",
+        "safetensors", "scipy", "opencv-python-headless",
+    ]
+    print(f"Installing: {', '.join(pkgs)}...")
+    env = os.environ.copy()
+    env["GIT_SSL_NO_VERIFY"] = "1"
+    env["PIP_REQUIRE_VIRTUALENV"] = "false"
     subprocess.run(
-        [sys.executable, "-m", "pip", "install", "-r", "requirements.txt", "gradio", "-q"],
-        check=False,
+        [sys.executable, "-m", "pip", "install"] + pkgs + ["-q"],
+        check=False, env=env,
     )
 
 _install_missing_deps()
