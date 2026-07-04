@@ -3,7 +3,25 @@ import os.path as osp
 import sys
 import shutil
 import tempfile
+import subprocess
 from pathlib import Path
+
+def _install_missing_deps():
+    missing = []
+    for mod in ["diffusers", "torch", "transformers", "psd_tools"]:
+        try:
+            __import__(mod)
+        except ImportError:
+            missing.append(mod)
+    if not missing:
+        return
+    print(f"Installing missing deps: {', '.join(missing)}...")
+    subprocess.run(
+        [sys.executable, "-m", "pip", "install", "-r", "requirements.txt", "gradio", "-q"],
+        check=False,
+    )
+
+_install_missing_deps()
 
 import gradio as gr
 import numpy as np
@@ -12,7 +30,6 @@ from PIL import Image
 sys.path.insert(0, osp.join(osp.dirname(osp.abspath(__file__)), "common"))
 
 from utils.inference_utils import apply_layerdiff, apply_marigold, further_extr
-from utils.io_utils import load_parts
 
 VALID_BODY_PARTS_V2 = [
     "hair", "headwear", "face", "eyes", "eyewear", "ears", "earwear",
